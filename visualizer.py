@@ -66,14 +66,26 @@ def draw_pieces(screen, state, moving_info=None, alpha=0.0):
     rabbit_radius = int(TILE_SIZE * 0.25)
     for r in state.rabbits:
         ry, rx = r.loc.y, r.loc.x
+        arc_offset = 0
         if piece_type == "rabbit" and (ry, rx) == moving_f:
             # Interpolate position
             curr_y = ry + (moving_t[0] - ry) * alpha
             curr_x = rx + (moving_t[1] - rx) * alpha
+            # Calculate jump height (parabolic arc)
+            jump_height = TILE_SIZE * 0.6
+            arc_offset = jump_height * 4 * alpha * (1 - alpha)
         else:
             curr_y, curr_x = ry, rx
             
         cx, cy = get_tile_center(curr_y, curr_x)
+        
+        if arc_offset > 0:
+            # Draw a simple shadow while jumping
+            shadow_radius = int(rabbit_radius * 0.8)
+            pygame.draw.circle(screen, (0, 60, 0), (cx, cy), shadow_radius)
+            # Shift the rabbit upwards on the screen to simulate height
+            cy -= arc_offset
+            
         pygame.draw.circle(screen, RABBIT_COLOR, (cx, cy), rabbit_radius)
 
 def run_visualizer(initial_state, solution, autoplay=False, show_controls=True, level_id=None):
