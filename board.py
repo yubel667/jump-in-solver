@@ -108,6 +108,26 @@ class BoardState:
     def is_in_boundary(self, loc: Loc) -> bool:
         return 0 <= loc.y < 5 and 0 <= loc.x < 5
 
+    def do_move(self, piece_type: str, from_loc: tuple, to_loc: tuple) -> "BoardState":
+        fy, fx = from_loc
+        ty, tx = to_loc
+        if piece_type == "rabbit":
+            new_rabbits = []
+            for r in self.rabbits:
+                if r.loc.y == fy and r.loc.x == fx:
+                    new_rabbits.append(Rabbit(Loc(ty, tx)))
+                else:
+                    new_rabbits.append(Rabbit(Loc(r.loc.y, r.loc.x)))
+            return BoardState(self.setup, new_rabbits, self.foxes)
+        else:
+            new_foxes = []
+            for f in self.foxes:
+                if f.loc.y == fy and f.loc.x == fx:
+                    new_foxes.append(Fox(Loc(ty, tx), f.orientation))
+                else:
+                    new_foxes.append(Fox(Loc(f.loc.y, f.loc.x), f.orientation))
+            return BoardState(self.setup, self.rabbits, new_foxes)
+
     # Return None means rabbit cannot jump to that direction.
     # Return Loc means rabbit can jump to that location.
     def get_rabbit_jump_location(self, loc: Loc, direction: Direction, obstacle_map: np.ndarray) -> Optional[Loc]:
