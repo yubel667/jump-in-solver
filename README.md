@@ -1,10 +1,10 @@
 # Jump In' Solver
 
-An automated solver and graphical interface for the **"Jump In'"** puzzle by **SmartGames**. (I highly recommend buying a physical copy!)
+An automated solver and graphical interface for the **"Jump In'"** puzzle by **SmartGames**. (I highly recommend buying a physical copy for the touch of the puzzle.)
 
 ## About the project
 
-This is a "vibe coding" project born from a love for sequential movement puzzles. The project includes a complete engine to model the board, an optimized BFS solver to find the shortest paths, and a polished Pygame UI to visualize the solutions with smooth jumping animations.
+This is a vibe coding project. The project includes a complete engine to model the board, an optimized BFS solver to find the shortest paths, and a polished Pygame UI to visualize the solutions with smooth jumping animations.
 
 Currently, this project is considered complete as all 100 levels (Standard + XL expansion) are included and solved.
 
@@ -12,17 +12,17 @@ You can find all questions (in ASCII format) in the `questions/` folder and anim
 
 Below is a sample solution webp for the first puzzle.
 
-![Level 01 Solution](solutions/1.webp)
+![Level 01 Solution](solutions/01.webp)
 
 ## Rules & Useful links
 Click the image (YouTube link) to get an overview of the rules.
-[![Instructions](https://img.youtube.com/vi/R3LqFv-YlIk/0.jpg)](https://www.youtube.com/watch?v=R3LqFv-YlIk)
+[![Instructions](https://img.youtube.com/vi/8sEoYzcmOfc/0.jpg)](https://www.youtube.com/watch?v=8sEoYzcmOfc)
 
 Here's the designer's webpage introduction to the game:
-https://www.smartgames.eu/uk/compact-games/jump-in
+https://www.smartgamesandpuzzles.com/jump-in.html
 
-Due to copyright, I will not show any instruction or booklet, but you can download them for free here if you are interested:
-https://www.smartgames.eu/uk/compact-games/jump-in#downloads
+Due to copyright, I will not show any instruction or booklet, but you can download them for free from their website if you are interested:
+https://www.smartgames.eu/uk/one-player-games/jump
 
 # == Everything below is generated ==
 
