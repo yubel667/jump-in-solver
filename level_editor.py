@@ -205,6 +205,7 @@ class LevelEditor:
                 center = (sx + 30, sy + 30)
                 if p['type'] == 'rabbit':
                     pygame.draw.circle(screen, vis.RABBIT_COLOR, center, 15)
+                    pygame.draw.circle(screen, (0, 0, 0), center, 15, 1)
                 elif p['type'] == 'mushroom':
                     pygame.draw.circle(screen, vis.MUSHROOM_COLOR, center, 18)
                 elif p['type'] == 'fox':
@@ -220,6 +221,7 @@ class LevelEditor:
                     cx, cy = vis.get_tile_center(y, x)
                     if p['type'] == 'rabbit':
                         pygame.draw.circle(screen, vis.RABBIT_COLOR, (cx, cy), int(vis.TILE_SIZE * 0.25))
+                        pygame.draw.circle(screen, (0, 0, 0), (cx, cy), int(vis.TILE_SIZE * 0.25), 1)
                     elif p['type'] == 'mushroom':
                         pygame.draw.circle(screen, vis.MUSHROOM_COLOR, (cx, cy), int(vis.TILE_SIZE * 0.3))
                     elif p['type'] == 'fox':
@@ -234,6 +236,7 @@ class LevelEditor:
                 p = self.pool[self.dragging_idx]
                 if p['type'] == 'rabbit':
                     pygame.draw.circle(screen, vis.RABBIT_COLOR, mouse_pos, int(vis.TILE_SIZE * 0.25))
+                    pygame.draw.circle(screen, (0, 0, 0), mouse_pos, int(vis.TILE_SIZE * 0.25), 1)
                 elif p['type'] == 'mushroom':
                     pygame.draw.circle(screen, vis.MUSHROOM_COLOR, mouse_pos, int(vis.TILE_SIZE * 0.3))
                 elif p['type'] == 'fox':

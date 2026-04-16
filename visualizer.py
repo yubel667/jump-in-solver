@@ -87,6 +87,7 @@ def draw_pieces(screen, state, moving_info=None, alpha=0.0):
             cy -= arc_offset
             
         pygame.draw.circle(screen, RABBIT_COLOR, (cx, cy), rabbit_radius)
+        pygame.draw.circle(screen, (0, 0, 0), (cx, cy), rabbit_radius, 1)
 
 def run_visualizer(initial_state, solution, autoplay=False, show_controls=True, level_id=None):
     pygame.init()
