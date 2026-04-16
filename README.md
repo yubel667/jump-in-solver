@@ -22,7 +22,7 @@ Here's the designer's webpage introduction to the game:
 https://www.smartgamesandpuzzles.com/jump-in.html
 
 Due to copyright, I will not show any instruction or booklet, but you can download them for free from their website if you are interested:
-https://www.smartgames.eu/uk/one-player-games/jump
+https://www.smartgames.eu/uk/one-player-games/jump#downloads
 
 # == Everything below is generated ==
 
