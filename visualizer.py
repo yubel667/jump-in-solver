@@ -93,6 +93,33 @@ def draw_pieces(screen, state, moving_info=None, alpha=0.0):
         pygame.draw.circle(screen, RABBIT_COLOR, (cx, cy), rabbit_radius)
         pygame.draw.circle(screen, (0, 0, 0), (cx, cy), rabbit_radius, 1)
 
+def draw_board(screen, state, moving_info=None, alpha=0.0, level_id=None, status_text=None, show_controls=False):
+    draw_board_base(screen)
+    draw_pieces(screen, state, moving_info, alpha)
+    
+    # UI Text
+    font = pygame.font.SysFont(None, 24)
+    if status_text:
+        img = font.render(status_text, True, TEXT_COLOR)
+        screen.blit(img, (MARGIN, BOARD_SIZE + MARGIN + 10))
+    
+    if level_id:
+        level_font = pygame.font.SysFont(None, 28, bold=True)
+        level_img = level_font.render(f"LEVEL: {level_id}", True, TEXT_COLOR)
+        screen.blit(level_img, (MARGIN, 10))
+        
+    if show_controls:
+        ctrl_font = pygame.font.SysFont(None, 20)
+        controls = [
+            "ENTER: Toggle Auto-play",
+            "SPACE: Animate next step",
+            "RIGHT/LEFT: Jump next/prev",
+            "R: Reset to start",
+            "ESC: Quit"
+        ]
+        for i, line in enumerate(controls):
+            screen.blit(ctrl_font.render(line, True, (180, 180, 180)), (MARGIN, BOARD_SIZE + MARGIN + 40 + i * 18))
+
 def run_visualizer(initial_state, solution, autoplay=False, show_controls=True, level_id=None):
     pygame.init()
     W_S = BOARD_SIZE + MARGIN * 2
@@ -153,41 +180,15 @@ def run_visualizer(initial_state, solution, autoplay=False, show_controls=True, 
                 alpha = min(1.0, elapsed / ANIMATION_DURATION)
                 
         # Draw everything
-        draw_board_base(screen)
+        moving_info = (move["piece"], move["from"], move["to"]) if move else None
         
-        moving_info = None
-        if move:
-            moving_info = (move["piece"], move["from"], move["to"])
-            
-        draw_pieces(screen, state_before, moving_info, alpha)
-        
-        # UI Text
-        font = pygame.font.SysFont(None, 24)
         status_text = f"Move {step_idx}/{len(move_steps)-1}"
         if is_final_state and state_before.get_is_finished():
             status_text += " - SOLVED!"
         if paused:
             status_text += " (PAUSED)"
-        
-        img = font.render(status_text, True, TEXT_COLOR)
-        screen.blit(img, (MARGIN, W_S + 10))
-        
-        if level_id:
-            level_font = pygame.font.SysFont(None, 28, bold=True)
-            level_img = level_font.render(f"LEVEL: {level_id}", True, TEXT_COLOR)
-            screen.blit(level_img, (MARGIN, 10))
             
-        if show_controls:
-            ctrl_font = pygame.font.SysFont(None, 20)
-            controls = [
-                "ENTER: Toggle Auto-play",
-                "SPACE: Animate next step",
-                "RIGHT/LEFT: Jump next/prev",
-                "R: Reset to start",
-                "ESC: Quit"
-            ]
-            for i, line in enumerate(controls):
-                screen.blit(ctrl_font.render(line, True, (180, 180, 180)), (MARGIN, W_S + 40 + i * 18))
+        draw_board(screen, state_before, moving_info, alpha, level_id, status_text, show_controls)
         
         pygame.display.flip()
         clock.tick(60)
