@@ -112,7 +112,9 @@ def run_visualizer(initial_state, solution, autoplay=False, show_controls=True, 
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key in [pygame.K_SPACE, pygame.K_RETURN] and is_final_state:
+                    running = False
+                elif event.key == pygame.K_SPACE:
                     if paused and not is_final_state:
                         paused, single_step, anim_start_time = False, True, time.time()
                 elif event.key == pygame.K_RETURN:
