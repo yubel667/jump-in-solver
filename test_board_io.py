@@ -45,5 +45,23 @@ class TestBoardIO(unittest.TestCase):
         serialized_text = save_as_text(state)
         self.assertEqual(serialized_text.strip(), original_text.strip())
 
+    def test_adjacent_foxes_same_char(self):
+        # Two horizontal foxes next to each other using 'f'
+        text = (
+            "+-----+\n"
+            "|ffff |\n"
+            "|     |\n"
+            "|     |\n"
+            "|     |\n"
+            "|     |\n"
+            "+-----+"
+        )
+        state = parse_from_text(text)
+        self.assertEqual(len(state.foxes), 2)
+        self.assertEqual(state.foxes[0].orientation, Orientation.HORIZONTAL)
+        self.assertEqual(state.foxes[0].loc.x, 0)
+        self.assertEqual(state.foxes[1].orientation, Orientation.HORIZONTAL)
+        self.assertEqual(state.foxes[1].loc.x, 2)
+
 if __name__ == '__main__':
     unittest.main()

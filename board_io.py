@@ -19,34 +19,38 @@ def parse_from_text(text: str) -> BoardState:
                 mushrooms.append(Mushroom(loc))
             elif char == 'R':
                 rabbits.append(Rabbit(loc))
-            elif char == 'f':
-                fox_locs['f'].append((y, x))
-            elif char == 'F':
-                fox_locs['F'].append((y, x))
+            elif char in ['f', 'F']:
+                fox_locs[char].append((y, x))
                 
     foxes = []
-    for key in ['f', 'F']:
-        locs = fox_locs[key]
-        if not locs:
-            continue
-        if len(locs) != 2:
-            raise ValueError(f"Fox {key} must occupy exactly 2 spaces, found {len(locs)}")
-        
-        y1, x1 = locs[0]
-        y2, x2 = locs[1]
-        
-        if y1 == y2:
-            # Horizontal
-            orientation = Orientation.HORIZONTAL
-            loc = Loc(y1, min(x1, x2))
-        elif x1 == x2:
-            # Vertical
-            orientation = Orientation.VERTICAL
-            loc = Loc(min(y1, y2), x1)
-        else:
-            raise ValueError(f"Fox {key} spaces are not adjacent horizontally or vertically")
-        
-        foxes.append(Fox(loc, orientation))
+    for char_type in ['f', 'F']:
+        locs = fox_locs[char_type]
+        used = [False] * len(locs)
+        for i in range(len(locs)):
+            if used[i]:
+                continue
+            y1, x1 = locs[i]
+            found_pair = False
+            # Look for a neighbor to the right or below to form a pair
+            for j in range(i + 1, len(locs)):
+                if used[j]:
+                    continue
+                y2, x2 = locs[j]
+                # Check adjacency
+                if (y1 == y2 and abs(x1 - x2) == 1) or (x1 == x2 and abs(y1 - y2) == 1):
+                    used[i] = True
+                    used[j] = True
+                    if y1 == y2:
+                        orientation = Orientation.HORIZONTAL
+                        loc = Loc(y1, min(x1, x2))
+                    else:
+                        orientation = Orientation.VERTICAL
+                        loc = Loc(min(y1, y2), x1)
+                    foxes.append(Fox(loc, orientation))
+                    found_pair = True
+                    break
+            if not found_pair:
+                raise ValueError(f"Unpaired fox character '{char_type}' at ({y1}, {x1})")
         
     setup = BoardSetup(mushrooms)
     return BoardState(setup, rabbits, foxes)
@@ -60,6 +64,8 @@ def save_as_text(state: BoardState) -> str:
     for r in state.rabbits:
         grid[r.loc.y, r.loc.x] = 'R'
         
+    # To handle multiple foxes potentially having the same character type,
+    # we assign 'f' and 'F' based on their index in the list.
     for i, fox in enumerate(state.foxes):
         char = 'f' if i == 0 else 'F'
         if fox.orientation == Orientation.HORIZONTAL:
