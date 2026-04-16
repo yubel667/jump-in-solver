@@ -10,9 +10,15 @@ Currently, this project is considered complete as all 100 levels (Standard + XL 
 
 You can find all questions (in ASCII format) in the `questions/` folder and animated solutions in the `solutions/` folder.
 
-Below is a sample solution webp for the first puzzle.
+
+Below is the solution webp for the first puzzle to understand its rules:
 
 ![Level 01 Solution](solutions/01.webp)
+
+Below is the solution webp for the last puzzle to understand its complexity:
+
+![Level 60 Solution](solutions/60.webp)
+
 
 ## Rules & Useful links
 Click the image (YouTube link) to get an overview of the rules.
